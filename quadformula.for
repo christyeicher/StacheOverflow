@@ -1,0 +1,162 @@
+C
+C     TEST PROGRAM
+C
+      REAL RA, RB, RC, R1R, R1I, R2R, R2I
+C
+      CALL READREALS(RA, RB, RC)
+C
+      CALL PRINTHEADER()
+      CALL PRINTNEWLINE()
+C
+      CALL PRINTCOUNT(1)
+      CALL PRINTREAL(RA)
+      CALL PRINTREAL(RB)
+      CALL PRINTREAL(RC)
+C	  
+	  CALL QUADFORM(RA, RB, RC)
+C
+      CALL PRINTREAL(R1R)
+      CALL PRINTREAL(R1I)
+      CALL PRINTREAL(R2R)
+      CALL PRINTREAL(R2I)
+      CALL PRINTNEWLINE()
+C
+      CALL PRINTNEWLINE()
+      CALL PRINTFOOTER(20)
+      END
+C	  
+C     ===== SUBROUTINE READREALS =====
+C     THIS ROUTINE WILL BE USED TO 
+C     READ IN THREE REAL VALUES
+C     ================================
+      SUBROUTINE READREALS(RA, RB, RC)
+C
+      READ(5, 350) RA, RB, RC
+  350 FORMAT(3F10.0)
+C
+      RETURN
+      END 
+C
+C     ===== SUBROUTINE PRINTHEADER =====
+C     THIS ROUTINE WILL BE USED TO PRINT
+C     THE COLUMNS HEADER
+C     ==================================
+      SUBROUTINE PRINTHEADER()
+C
+      WRITE(6, 400) 'COUNT' 
+  400 FORMAT(A5 $)
+      WRITE(6, 410) 'A', 'B', 'C'
+  410 FORMAT(3A15 $)
+      WRITE(6, 420) 'X1 REAL', 'X1 IMG', 'X2 REAL', 'X2 IMG'
+  420 FORMAT(5A15 $)
+C     
+      RETURN
+      END     
+C
+C     ===== SUBROUTINE PRINTBLANK =====
+C     THIS ROUTINE WILL BE USED WHEN AN
+C     ENTRY SHOULD BE LEFT BLANK
+C     =================================
+      SUBROUTINE PRINTBLANK()
+C
+      WRITE(6, 450) ''
+  450 FORMAT(A15 $)
+C
+      RETURN
+      END
+C
+C     ===== SUBROUTINE PRINTREAL =====
+C     THIS ROUTINE WILL BE USED TO
+C     PRINT REAL VALUES
+C     ================================
+      SUBROUTINE PRINTREAL(RVAL)
+C
+      WRITE(6, 500) RVAL 
+  500 FORMAT(1PE15.4 $)
+C
+      RETURN
+      END
+C
+C     ===== SUBROUTINE PRINTRESULT =====
+C     THIS ROUTINE WILL BE USED TO
+C     CALCULATE AND PRINT THE QUADRATIC
+C	  FORMULA
+C     ================================
+      SUBROUTINE PRINTRESULT(RVAL)
+C
+	  
+      WRITE(6, 500) RVAL 
+  500 FORMAT(1PE15.4 $)
+C
+      RETURN
+      END
+C
+C     ===== SUBROUTINE PRINTCOUNT =====
+C     THIS ROUTINE WILL BE USED TO      
+C     PRINT OUT THE CURRENT COUNT
+C     =================================
+      SUBROUTINE PRINTCOUNT(ICOUNT)
+C
+      WRITE(6, 550) ICOUNT
+  550 FORMAT(I4, ':' $)
+C
+      RETURN
+      END
+C
+C     ===== SUBROUTINE PRINTNEWLINE =====
+C     THIS ROUTINE WILL BE USED TO PRINT
+C     A NEW LINE
+C     ===================================
+      SUBROUTINE PRINTNEWLINE()
+C
+      WRITE(6, 570)
+  570 FORMAT()
+C
+      RETURN
+      END
+C
+C     ===== SUBROUTINE PRINTFOOTER =====
+C     THIS ROUTINE WILL BE USED TO PRINT
+C     THE FINAL LINE COUNT
+C     ==================================
+      SUBROUTINE PRINTFOOTER(ICOUNT)
+C
+      WRITE(6, 600)
+  600 FORMAT()
+      WRITE(6, 610) ICOUNT
+  610 FORMAT('END OF PROGRAM: ', I2, ' CARDS READ.')
+C
+      RETURN
+      END
+C     ===== SUBROUTINE QUADFORM ======
+C     THIS ROUTINE WILL BE USED TO 
+C     COMPUTE THE QUADRATIC FORMULA
+C     ================================    
+      SUBROUTINE QUADFORM(RA, RB, RC)
+      R = 0.0-0.5*RB/RA
+      IF (RB*RB-4*RA*RC) 10, 20, 30
+C
+C     NEGATIVE
+  10  R1R = R
+      R2R = R
+      R1I = 0.0
+      R2I = 0.0-R1I
+C
+C     ZERO
+  20  R1R = R
+      R2R = R
+      R1I = 0.0
+      R2I = 0.0
+C    
+C     POSITIVE
+  30  DIS1 = SQRT(RB*RB-4*RA*RC)
+      RPLUS = 0.5*(DIS1-RB)/RA
+      RMINUS = 0.5*(0.0-(RB+DIS1))/RA
+C
+      R1R = RPLUS*DIS1
+      R2R = RMINUS*DIS1
+      R1I = 0.0
+      R2I = 0.0
+C
+      RETURN
+      END 
